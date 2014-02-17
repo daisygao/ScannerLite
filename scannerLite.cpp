@@ -11,7 +11,11 @@
 #include <vector>
 using namespace cv;
 using namespace std;
-
+/**
+ * Get edges of an image
+ * @param gray - grayscale input image
+ * @param canny - output edge image
+ */
 void getCanny(Mat gray, Mat &canny) {
   Mat thres;
   double high_thres = threshold(gray, thres, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU), low_thres = high_thres * 0.5;
@@ -38,6 +42,12 @@ bool cmp_x(const Line &p1, const Line &p2) {
   return p1._center.x < p2._center.x;
 }
 
+/**
+ * Compute intersect point of two lines l1 and l2
+ * @param l1 
+ * @param l2
+ * @return Intersect Point
+ */
 Point2f computeIntersect(Line l1, Line l2) {
   int x1 = l1._p1.x, x2 = l1._p2.x, y1 = l1._p1.y, y2 = l1._p2.y;
   int x3 = l2._p1.x, x4 = l2._p2.x, y3 = l2._p1.y, y4 = l2._p2.y;
@@ -60,7 +70,7 @@ void getSortedCorners(vector<Point2f> &pts, vector<Line> horizontals, vector<Lin
 int main(int argc, char** argv) {
   /* get input image */
   string img_path[] = {"images/doc1.jpg", "images/doc2.jpg", "images/doc3.jpg"};
-  Mat img = imread(img_path[0]);
+  Mat img = imread(img_path[2]);
   // resize input image to img_proc to reduce computation
   Mat img_proc;
   int w = img.size().width, h = img.size().height, min_w = 200;
