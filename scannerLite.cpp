@@ -1,7 +1,7 @@
 /* 
  * File: scannerLite.cpp
  * Author: daisygao
- * An OpenCV program implementing the recognition feature of the app "ScannerPro". 
+ * An OpenCV program implementing the recognition feature of the app "CamScanner". 
  * It extracts the main document object from an image and adjust it to A4 size. 
  */
 #include <opencv2/opencv.hpp>
