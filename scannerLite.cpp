@@ -103,7 +103,7 @@ int main(int argc, char** argv) {
     line(img_proc, Point(v[0], v[1]), Point(v[2], v[3]), Scalar(0, 0, 255), 1, CV_AA);
   }
 
-  // edge cases when not enough lines were detected
+  // edge cases when not enough lines are detected
   if (horizontals_raw.size() < 2) {
     if (horizontals_raw.size() == 0 || horizontals_raw[0]._center.y > h_proc / 2) {
       horizontals_raw.push_back(Line(Point(0, 0), Point(w_proc - 1, 0)));
