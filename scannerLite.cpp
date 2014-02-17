@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
 
   // extract lines from the edge image
   vector<Vec4i> lines;
-  vector<Line> horizontals_raw, verticals_raw;
+  vector<Line> horizontals, verticals;
   HoughLinesP(canny, lines, 1, CV_PI / 180, w_proc / 3, w_proc / 3, 20);
   for (size_t i = 0; i < lines.size(); i++) {
     Vec4i v = lines[i];
@@ -95,39 +95,39 @@ int main(int argc, char** argv) {
     Line l(Point(v[0], v[1]), Point(v[2], v[3]));
     // get horizontal lines and vertical lines respectively
     if (fabs(delta_x) > fabs(delta_y)) {
-      horizontals_raw.push_back(l);
+      horizontals.push_back(l);
     } else {
-      verticals_raw.push_back(l);
+      verticals.push_back(l);
     }
     // for visualization only
     line(img_proc, Point(v[0], v[1]), Point(v[2], v[3]), Scalar(0, 0, 255), 1, CV_AA);
   }
 
   // edge cases when not enough lines are detected
-  if (horizontals_raw.size() < 2) {
-    if (horizontals_raw.size() == 0 || horizontals_raw[0]._center.y > h_proc / 2) {
-      horizontals_raw.push_back(Line(Point(0, 0), Point(w_proc - 1, 0)));
+  if (horizontals.size() < 2) {
+    if (horizontals.size() == 0 || horizontals[0]._center.y > h_proc / 2) {
+      horizontals.push_back(Line(Point(0, 0), Point(w_proc - 1, 0)));
     }
-    if (horizontals_raw.size() == 0 || horizontals_raw[0]._center.y <= h_proc / 2) {
-      horizontals_raw.push_back(Line(Point(0, h_proc - 1), Point(w_proc - 1, h_proc - 1)));
+    if (horizontals.size() == 0 || horizontals[0]._center.y <= h_proc / 2) {
+      horizontals.push_back(Line(Point(0, h_proc - 1), Point(w_proc - 1, h_proc - 1)));
     }
   }
-  if (verticals_raw.size() < 2) {
-    if (verticals_raw.size() == 0 || verticals_raw[0]._center.x > w_proc / 2) {
-      verticals_raw.push_back(Line(Point(0, 0), Point(0, h_proc - 1)));
+  if (verticals.size() < 2) {
+    if (verticals.size() == 0 || verticals[0]._center.x > w_proc / 2) {
+      verticals.push_back(Line(Point(0, 0), Point(0, h_proc - 1)));
     }
-    if (verticals_raw.size() == 0 || verticals_raw[0]._center.x <= w_proc / 2) {
-      verticals_raw.push_back(Line(Point(w_proc - 1, 0), Point(w_proc - 1, h_proc - 1)));
+    if (verticals.size() == 0 || verticals[0]._center.x <= w_proc / 2) {
+      verticals.push_back(Line(Point(w_proc - 1, 0), Point(w_proc - 1, h_proc - 1)));
     }
   }
   // sort lines according to their center point
-  sort(horizontals_raw.begin(), horizontals_raw.end(), cmp_y);
-  sort(verticals_raw.begin(), verticals_raw.end(), cmp_x);
+  sort(horizontals.begin(), horizontals.end(), cmp_y);
+  sort(verticals.begin(), verticals.end(), cmp_x);
   // for visualization only
-  line(img_proc, horizontals_raw[0]._p1, horizontals_raw[0]._p2, Scalar(0, 255, 0), 2, CV_AA);
-  line(img_proc, horizontals_raw[horizontals_raw.size() - 1]._p1, horizontals_raw[horizontals_raw.size() - 1]._p2, Scalar(0, 255, 0), 2, CV_AA);
-  line(img_proc, verticals_raw[0]._p1, verticals_raw[0]._p2, Scalar(255, 0, 0), 2, CV_AA);
-  line(img_proc, verticals_raw[verticals_raw.size() - 1]._p1, verticals_raw[verticals_raw.size() - 1]._p2, Scalar(255, 0, 0), 2, CV_AA);
+  line(img_proc, horizontals[0]._p1, horizontals[0]._p2, Scalar(0, 255, 0), 2, CV_AA);
+  line(img_proc, horizontals[horizontals.size() - 1]._p1, horizontals[horizontals.size() - 1]._p2, Scalar(0, 255, 0), 2, CV_AA);
+  line(img_proc, verticals[0]._p1, verticals[0]._p2, Scalar(255, 0, 0), 2, CV_AA);
+  line(img_proc, verticals[verticals.size() - 1]._p1, verticals[verticals.size() - 1]._p2, Scalar(255, 0, 0), 2, CV_AA);
 
   /* perspective transformation */
 
@@ -144,7 +144,7 @@ int main(int argc, char** argv) {
   dst_pts.push_back(Point(w_a4 - 1, h_a4 - 1));
 
   // corners of source image with the sequence [tl, tr, bl, br]
-  getSortedCorners(img_pts, horizontals_raw, verticals_raw);
+  getSortedCorners(img_pts, horizontals, verticals);
   for (size_t i = 0; i < img_pts.size(); i++) {
     // for visualization only
     circle(img_proc, img_pts[i], 10, Scalar(255, 255, 0), 3);

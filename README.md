@@ -9,7 +9,7 @@ Input image 1:
 
 Extraction result 1:
 
-![](https://raw2.github.com/daisygao/ScannerLite/master/dst1.jpg)
+![](https://raw2.github.com/daisygao/ScannerLite/master/output/dst1.jpg)
 
 Input image 2:
 
@@ -17,7 +17,7 @@ Input image 2:
 
 Extraction result 2:
 
-![](https://raw2.github.com/daisygao/ScannerLite/master/dst2.jpg)
+![](https://raw2.github.com/daisygao/ScannerLite/master/output/dst2.jpg)
 
 Input image 3:
 
@@ -25,4 +25,4 @@ Input image 3:
 
 Extraction result 3:
 
-![](https://raw2.github.com/daisygao/ScannerLite/master/dst3.jpg)
+![](https://raw2.github.com/daisygao/ScannerLite/master/output/dst3.jpg)
