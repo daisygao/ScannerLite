@@ -1,7 +1,7 @@
 ScannerLite
 ===========
 
-An OpenCV program implementing the recognition feature of the app "ScannerPro". It extracts the main document object from an image and adjusts it to A4 size.
+An OpenCV program implementing the recognition feature of the app "CamScanner(扫描全能王)". It extracts the main document object from an image and adjusts it to A4 size.
 
 Input image 1:
 
