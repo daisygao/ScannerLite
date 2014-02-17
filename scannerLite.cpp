@@ -11,6 +11,7 @@
 #include <vector>
 using namespace cv;
 using namespace std;
+
 /**
  * Get edges of an image
  * @param gray - grayscale input image
@@ -67,10 +68,10 @@ void getSortedCorners(vector<Point2f> &pts, vector<Line> horizontals, vector<Lin
   pts.push_back(computeIntersect(horizontals[horizontals.size() - 1], verticals[verticals.size() - 1]));
 }
 
-int main(int argc, char** argv) {
+void scan(String file) {
+
   /* get input image */
-  string img_path[] = {"images/doc1.jpg", "images/doc2.jpg", "images/doc3.jpg"};
-  Mat img = imread(img_path[2]);
+  Mat img = imread(file);
   // resize input image to img_proc to reduce computation
   Mat img_proc;
   int w = img.size().width, h = img.size().height, min_w = 200;
@@ -169,5 +170,10 @@ int main(int argc, char** argv) {
   imshow("img_proc", img_proc);
   imshow("dst", dst);
   waitKey(0);
+}
+
+int main(int argc, char** argv) {
+  string img_path[] = {"images/doc1.jpg", "images/doc2.jpg", "images/doc3.jpg"};
+  scan(img_path[2]);
   return 0;
 }
