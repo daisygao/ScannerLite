@@ -4,7 +4,6 @@
  * An OpenCV program implementing the recognition feature of the app "ScannerPro". 
  * It extracts the main document object from an image and adjust it to A4 size. 
  */
-// Example showing how to read and write images
 #include <opencv2/opencv.hpp>
 #include <algorithm>
 #include <string>
