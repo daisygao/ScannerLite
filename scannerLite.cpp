@@ -60,14 +60,7 @@ Point2f computeIntersect(Line l1, Line l2) {
   return Point2f(-1, -1);
 }
 
-void getSortedCorners(vector<Point2f> &pts, vector<Line> horizontals, vector<Line> verticals) {
-  pts.push_back(computeIntersect(horizontals[0], verticals[0]));
-  pts.push_back(computeIntersect(horizontals[0], verticals[verticals.size() - 1]));
-  pts.push_back(computeIntersect(horizontals[horizontals.size() - 1], verticals[0]));
-  pts.push_back(computeIntersect(horizontals[horizontals.size() - 1], verticals[verticals.size() - 1]));
-}
-
-void scan(String file) {
+void scan(String file, bool debug = true) {
 
   /* get input image */
   Mat img = imread(file);
@@ -100,7 +93,8 @@ void scan(String file) {
       verticals.push_back(l);
     }
     // for visualization only
-    line(img_proc, Point(v[0], v[1]), Point(v[2], v[3]), Scalar(0, 0, 255), 1, CV_AA);
+    if (debug)
+      line(img_proc, Point(v[0], v[1]), Point(v[2], v[3]), Scalar(0, 0, 255), 1, CV_AA);
   }
 
   // edge cases when not enough lines are detected
@@ -124,10 +118,12 @@ void scan(String file) {
   sort(horizontals.begin(), horizontals.end(), cmp_y);
   sort(verticals.begin(), verticals.end(), cmp_x);
   // for visualization only
-  line(img_proc, horizontals[0]._p1, horizontals[0]._p2, Scalar(0, 255, 0), 2, CV_AA);
-  line(img_proc, horizontals[horizontals.size() - 1]._p1, horizontals[horizontals.size() - 1]._p2, Scalar(0, 255, 0), 2, CV_AA);
-  line(img_proc, verticals[0]._p1, verticals[0]._p2, Scalar(255, 0, 0), 2, CV_AA);
-  line(img_proc, verticals[verticals.size() - 1]._p1, verticals[verticals.size() - 1]._p2, Scalar(255, 0, 0), 2, CV_AA);
+  if (debug) {
+    line(img_proc, horizontals[0]._p1, horizontals[0]._p2, Scalar(0, 255, 0), 2, CV_AA);
+    line(img_proc, horizontals[horizontals.size() - 1]._p1, horizontals[horizontals.size() - 1]._p2, Scalar(0, 255, 0), 2, CV_AA);
+    line(img_proc, verticals[0]._p1, verticals[0]._p2, Scalar(255, 0, 0), 2, CV_AA);
+    line(img_proc, verticals[verticals.size() - 1]._p1, verticals[verticals.size() - 1]._p2, Scalar(255, 0, 0), 2, CV_AA);
+  }
 
   /* perspective transformation */
 
@@ -144,11 +140,17 @@ void scan(String file) {
   dst_pts.push_back(Point(w_a4 - 1, h_a4 - 1));
 
   // corners of source image with the sequence [tl, tr, bl, br]
-  getSortedCorners(img_pts, horizontals, verticals);
+  img_pts.push_back(computeIntersect(horizontals[0], verticals[0]));
+  img_pts.push_back(computeIntersect(horizontals[0], verticals[verticals.size() - 1]));
+  img_pts.push_back(computeIntersect(horizontals[horizontals.size() - 1], verticals[0]));
+  img_pts.push_back(computeIntersect(horizontals[horizontals.size() - 1], verticals[verticals.size() - 1]));
+
+  // convert to original image scale
   for (size_t i = 0; i < img_pts.size(); i++) {
     // for visualization only
-    circle(img_proc, img_pts[i], 10, Scalar(255, 255, 0), 3);
-    // convert to original image scale
+    if (debug) {
+      circle(img_proc, img_pts[i], 10, Scalar(255, 255, 0), 3);
+    }
     img_pts[i].x *= scale;
     img_pts[i].y *= scale;
   }
@@ -163,12 +165,14 @@ void scan(String file) {
   imwrite("dst.jpg", dst);
 
   // for visualization only
-  namedWindow("dst", CV_WINDOW_KEEPRATIO);
-  imshow("src", img_dis);
-  imshow("canny", canny);
-  imshow("img_proc", img_proc);
-  imshow("dst", dst);
-  waitKey(0);
+  if (debug) {
+    namedWindow("dst", CV_WINDOW_KEEPRATIO);
+    imshow("src", img_dis);
+    imshow("canny", canny);
+    imshow("img_proc", img_proc);
+    imshow("dst", dst);
+    waitKey(0);
+  }
 }
 
 int main(int argc, char** argv) {
