@@ -13,7 +13,7 @@ Input image 1:
 
 Extraction result 1:
 
-![](https:/raw.githubusercontent.com/daisygao/ScannerLite/master/output/dst1.jpg)
+![](https://raw.githubusercontent.com/daisygao/ScannerLite/master/output/dst1.jpg)
 
 Input image 2:
 
