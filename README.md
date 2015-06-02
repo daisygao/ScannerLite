@@ -9,24 +9,24 @@ Python port by @[scturtle](https://github.com/scturtle): [Python Port](https://g
 
 Input image 1:
 
-![](https://raw2.github.com/daisygao/ScannerLite/master/images/doc1.jpg)
+![](https://raw.githubusercontent.com/daisygao/ScannerLite/master/images/doc1.jpg)
 
 Extraction result 1:
 
-![](https://raw2.github.com/daisygao/ScannerLite/master/output/dst1.jpg)
+![](https:/raw.githubusercontent.com/daisygao/ScannerLite/master/output/dst1.jpg)
 
 Input image 2:
 
-![](https://raw2.github.com/daisygao/ScannerLite/master/images/doc2.jpg)
+![](https://raw.githubusercontent.com/daisygao/ScannerLite/master/images/doc2.jpg)
 
 Extraction result 2:
 
-![](https://raw2.github.com/daisygao/ScannerLite/master/output/dst2.jpg)
+![](https://raw.githubusercontent.com/daisygao/ScannerLite/master/output/dst2.jpg)
 
 Input image 3:
 
-![](https://raw2.github.com/daisygao/ScannerLite/master/images/doc3.jpg)
+![](https://raw.githubusercontent.com/daisygao/ScannerLite/master/images/doc3.jpg)
 
 Extraction result 3:
 
-![](https://raw2.github.com/daisygao/ScannerLite/master/output/dst3.jpg)
+![](https://raw.githubusercontent.com/daisygao/ScannerLite/master/output/dst3.jpg)
