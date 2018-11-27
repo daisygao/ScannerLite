@@ -49,15 +49,14 @@ bool cmp_x(const Line &p1, const Line &p2) {
  * @return Intersect Point
  */
 Point2f computeIntersect(Line l1, Line l2) {
-  int x1 = l1._p1.x, x2 = l1._p2.x, y1 = l1._p1.y, y2 = l1._p2.y;
-  int x3 = l2._p1.x, x4 = l2._p2.x, y3 = l2._p1.y, y4 = l2._p2.y;
-  if (float d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)) {
-    Point2f pt;
-    pt.x = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / d;
-    pt.y = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / d;
-    return pt;
-  }
-  return Point2f(-1, -1);
+  Point2f a = l1._p1, b = l1._p2, c = l2._p1, d = l2._p2;
+  int denominator = (b.y - a.y) * (d.x - c.x) - (a.x - b.x) * (c.y - d.y);
+  if (denominator == 0) {  
+    return Point2f(-1, -1);
+  } 
+  int x = ((b.x - a.x) * (d.x - c.x) * (c.y - a.y) + (b.y - a.y) * (d.x - c.x) * a.x - (d.y - c.y) * (b.x - a.x) * c.x) / denominator;
+  int y = -((b.y - a.y) * (d.y - c.y) * (c.x - a.x) + (b.x - a.x) * (d.y - c.y) * a.y - (d.x - c.x) * (b.y - a.y) * c.y) / denominator;
+  return Point2f(x, y);
 }
 
 void scan(String file, bool debug = true) {
